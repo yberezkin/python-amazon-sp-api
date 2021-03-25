@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 from sp_api.api import FulfillmentInbound
-from sp_api.base import Marketplaces
 
 
 def test_item_guidance():
@@ -119,7 +118,7 @@ def test_preorder():
 
 #
 # def test_confirm_preorder():
-#     res = FulfillmentInbound().confirm_preorder('shipmentId1', {
+#     res = FulfillmentInbound().confirm_preorder('shipmentId1', **{
 #         "NeedByDate": "2020-10-10",
 #         "MarketplaceId": "MarketplaceId1"
 #     })
@@ -127,7 +126,7 @@ def test_preorder():
 
 
 def test_get_prep_orders():
-    res = FulfillmentInbound().prep_instruction(**{"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
+    res = FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
     assert res.errors is None
 
 
@@ -152,17 +151,15 @@ def test_get_bill_of_lading():
 
 
 def test_get_shipments():
-    res = FulfillmentInbound().get_shipments(QueryType='SHIPMENT')
+    res = FulfillmentInbound().get_shipments(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER")
     assert res.errors is None
 
 
 def test_get_shipment_items():
-    res = FulfillmentInbound().shipment_items_by_shipment('FBA15DJ9SVVD')
+    res = FulfillmentInbound().shipment_items_by_shipment('FBA15DJ9SVVD', MarketplaceId="ATVPDKIKX0DER")
     assert res.errors is None
 
 
 def test_get_items():
-    res = FulfillmentInbound().shipment_items(QueryType='SHIPMENT', NextToken='NextToken')
+    res = FulfillmentInbound().shipment_items(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER", NextToken='NextToken')
     assert res.errors is None
-
-

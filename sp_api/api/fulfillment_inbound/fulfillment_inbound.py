@@ -1,7 +1,6 @@
 from sp_api.base import Client, Marketplaces, ApiResponse
 from sp_api.base import sp_endpoint, fill_query_params
 
-
 class FulfillmentInbound(Client):
     @sp_endpoint("/fba/inbound/v0/itemsGuidance")
     def item_guidance(self, **kwargs):
@@ -24,12 +23,12 @@ class FulfillmentInbound(Client):
         return self._request(fill_query_params(kwargs.pop('path'), shipment_id), params=kwargs)
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/preorder/confirm", method='PUT')
-    def confirm_preorder(self, shipment_id, data, **kwargs):
-        return self._request(fill_query_params(kwargs.pop('path'), shipment_id), params={**data, **kwargs})
+    def confirm_preorder(self, shipment_id, **kwargs):
+        return self._request(fill_query_params(kwargs.pop('path'), shipment_id), params=kwargs)
 
     @sp_endpoint("/fba/inbound/v0/prepInstructions")
-    def prep_instruction(self, **kwargs):
-        return self._request(kwargs.pop('path'), params=kwargs)
+    def prep_instruction(self, data, **kwargs):
+        return self._request(kwargs.pop('path'), params={**data, **kwargs})
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/transport")
     def get_transport_information(self, shipment_id, **kwargs):
