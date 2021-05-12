@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.3.4',
+    version='0.3.5',
     install_requires=[
         "requests",
         "six~=1.15.0",
@@ -31,6 +31,7 @@ setup(
               'sp_api.api.upload',
               'sp_api.api.merchant_fulfillment',
               'sp_api.api.fulfillment_inbound',
+              'sp_api.api.shipping',
               'sp_api.auth',
               'sp_api.base'],
     url='https://github.com/saleweaver/python-amazon-sp-api',
