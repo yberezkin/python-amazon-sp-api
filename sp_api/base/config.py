@@ -1,6 +1,6 @@
 import os
 import confuse
-
+import boto3
 
 class MissingCredentials(Exception):
     """
@@ -14,6 +14,7 @@ class CredentialProvider:
 
     def __init__(self, account='default', credentials=None):
         self.account = account
+        self.from_secrets()
         if credentials:
             self.credentials = self.Config(**credentials)
             missing = self.credentials.check_config()
@@ -21,6 +22,13 @@ class CredentialProvider:
                 raise MissingCredentials(f'The following configuration parameters are missing: {missing}')
         else:
             self.from_env()
+
+    def from_secrets(self):
+        client = boto3.client('secretsmanager')
+        response = client.get_secret_value(
+            SecretId='tests/sp-api'
+        )
+        print(response)
 
     def from_env(self):
         account_data = dict(
